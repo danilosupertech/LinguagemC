@@ -45,7 +45,7 @@ int main() {
         // Aloca novo nó
         Lista *novo = malloc(sizeof(Lista));
         if (novo == NULL) {
-            printf("Erro ao alocar memória!\n");
+            printf("Erro ao alocar memoria!\n");
             return 1;
         }
 
@@ -75,7 +75,7 @@ int main() {
     Lista *atual = inicio;
     int i = 0;
     while (atual != NULL) {
-        printf("Elemento %d: valor = %d, endereço = %p, próximo = %p\n",
+        printf("Elemento %d: valor = %d, endereco = %p, proximo = %p\n",
                i, atual->valor, (void*)atual, (void*)atual->proximo);
         atual = atual->proximo;
         i++;
