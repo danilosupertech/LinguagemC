@@ -99,14 +99,3 @@ gcc -std=c99 -Wall file_reader.c -o reader
 ./reader
 
 
-## 📥 Como Usar
-1. Copie todo o conteúdo acima
-2. Cole no seu arquivo `README.md`
-3. Personalize conforme necessário
-
-Este documento está pronto para uso imediato com:
-- Formatação Markdown perfeita
-- Seções bilíngues organizadas
-- Destaques de código apropriados
-- Tabelas de testes claras
-- Instruções de compilação precisas
