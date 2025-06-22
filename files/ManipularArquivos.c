@@ -1,77 +1,67 @@
+/**
+ * @file arquivo_texto.c
+ * @brief Programa demonstrativo de manipulação de arquivos de texto em C
+ * 
+ * Este programa ilustra operações básicas com arquivos de texto, incluindo:
+ * - Abertura e fechamento de arquivos
+ * - Tratamento de erros na abertura de arquivos
+ * - Leitura linha por linha com tratamento de buffer
+ * - Exibição de conteúdo na saída padrão
+ * 
+ * O programa lê o conteúdo de um arquivo chamado "string.txt" e exibe seu conteúdo
+ * linha por linha no console.
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-//Manipulação de arquivos de texto
 
+#define MAX_LINE_LENGTH 100  /**< Tamanho máximo do buffer para leitura de linhas */
+#define FILENAME "string.txt" /**< Nome do arquivo a ser lido */
 
-
+/**
+ * @brief Função principal do programa
+ * 
+ * Executa as seguintes operações:
+ * 1. Abre o arquivo especificado em modo leitura
+ * 2. Verifica erros na abertura do arquivo
+ * 3. Lê o conteúdo linha por linha usando buffer seguro
+ * 4. Exibe cada linha no console
+ * 5. Fecha o arquivo e finaliza o programa
+ * 
+ * @return int Código de saída do programa (0 = sucesso)
+ */
 int main(void) {
+    FILE *file;                 /**< Ponteiro para o arquivo */
+    char buffer[MAX_LINE_LENGTH]; /**< Buffer para armazenar linhas lidas */
 
+    // Abre o arquivo em modo leitura
+    file = fopen("string.txt", "r");
 
-
-
-	/*
-	FILE *file;
-	file = fopen("teste.txt","w");
-	fprintf(file,"Pao com mortadela.");
-	fclose(file);
-	return 0;
-	
-
-int x, y, z;
-
-FILE *file;
-file = fopen("numeros.txt","r");
-
-if(file == NULL){
-	printf("Arquivo nao pode ser aberto. Adios Baby !\n");
-	system("pause");
-	return 0; 
-}
-
-
-fscanf(file,"%i %i %i",&x,&y,&z);
-
-printf("%i -- %i -- %i \n",x,y,z);
-
-fclose(file);
-
-system("pause");
-return 0;
-*/
-
-FILE *file;
-file = fopen("string.txt","r");
-
-
-if(file == NULL){
-	printf("Arquivo nao pode ser aberto. Adios Baby !\n");
-	getchar();
-	exit(0); 
-}
-
-char frase[100];
-
-
-/*
-
-poderia usar também while (fgets(frase, sizeof(frase), file) != NULL) {};
-
-condição do while aceita qualquer valor não nulo como verdadeiro. E como fgets() 
-retorna NULL ao falhar ou ao atingir o fim do arquivo, essa forma funciona perfeitamente.
-*/
-
-    while (fgets(frase, sizeof(frase), file)) {
-        printf("%s", frase); // Imprime cada linha lida
+    // Verifica falha na abertura do arquivo
+    if (file == NULL) {
+        fprintf(stderr, "Erro: Não foi possível abrir o arquivo '%s'\n", FILENAME);
+        fprintf(stderr, "Verifique se o arquivo existe e as permissões de acesso\n");
+        getchar();
+        return EXIT_FAILURE;
     }
 
+    printf("Conteúdo do arquivo '%s':\n", "string.txt");
+    printf("----------------------------------------\n");
 
+    // Lê e exibe o conteúdo linha por linha
+    while (fgets(buffer, sizeof(buffer), file) != NULL) {
+        printf("%s", buffer);
+    }
 
+    printf("\n----------------------------------------\n");
+    printf("Fim do arquivo\n\n");
 
+    // Fecha o arquivo
+    fclose(file);
 
-printf("\n");
-fclose(file);
-system("pause");
-return 0;
+    // Pausa para visualização do resultado (Windows)
+    printf("Pressione qualquer tecla para sair...");
+    getchar();
 
+    return EXIT_SUCCESS;
 }
