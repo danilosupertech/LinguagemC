@@ -75,7 +75,7 @@ int main() {
     Lista *atual = inicio;
     int i = 0;
     while (atual != NULL) {
-        printf("Elemento %d: valor = %d, endereco = %p, proximo = %p\n",
+        printf("Elemento %d: valor = %d, enderec	o = %p, proximo = %p\n",
                i, atual->valor, (void*)atual, (void*)atual->proximo);
         atual = atual->proximo;
         i++;
