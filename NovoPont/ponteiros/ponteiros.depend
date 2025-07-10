@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1752064783 source:c:\areadev\c\linguagemc\novopont\ponteiros\main.c
+	<stdio.h>
+	<stdlib.h>
+
+1752066510 source:c:\areadev\c\linguagemc\novopont\ponteiros\vetores.c
+	<stdio.h>
+	<stdlib.h>
+
+1752066539 source:c:\areadev\c\linguagemc\novopont\ponteiros\mainx.c
+	<stdio.h>
+	<stdlib.h>
+

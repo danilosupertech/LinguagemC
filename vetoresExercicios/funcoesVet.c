@@ -84,6 +84,7 @@ Vetor ordenarVetor(Vetor v) {
  * @param v Struct Vetor contendo os dados originais.
  * @return Quantidade de números pares em um vetor informado..
  */
+ 
  int QtdParesVetor(Vetor v){
  	 int qtdPares = 0;  // Inicializa contagem
  	 size_t max = ARRAY_SIZE(v.valores); //Usando a macro criada no Protótipo
@@ -198,7 +199,7 @@ Vetor arrayFixos(void) {
 
     // b) Soma de A[0], A[1] e A[5]
     int soma = v.valores[0] + v.valores[1] + v.valores[5];
-    printf("\n🧮 Soma A[0] + A[1] + A[5] = %d\n", soma);
+    printf("\n Soma A[0] + A[1] + A[5] = %d\n", soma);
 
     // c) Altera A[4] para 100
     v.valores[4] = 100;
