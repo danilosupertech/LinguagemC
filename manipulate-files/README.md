@@ -1,101 +1,90 @@
-## 🇧🇷 Documentação em Português
+# File Handling (C)
 
-### 📌 Visão Geral
-Programa em C para leitura segura e eficiente de arquivos texto, demonstrando boas práticas de manipulação de arquivos com tratamento robusto de erros.
+This folder contains exercises and mini-programs focused on **file input/output in C**.
 
-### 🎯 Objetivo
-Implementar um leitor de arquivos que:
-- Abre arquivos com verificação rigorosa de erros
-- Lê conteúdo linha por linha prevenindo buffer overflow
-- Exibe conteúdo formatado no terminal
-- Gerencia recursos de memória corretamente
+The goal is to practice reading and writing files safely and correctly, using the C standard library.
 
-### ⚙️ Implementação
+---
+
+## Topics Covered
+
+- Opening and closing files (`fopen`, `fclose`)
+- Reading files:
+  - `fgets` (recommended for lines)
+  - `fscanf` (formatted input)
+  - `fread` (binary)
+- Writing files:
+  - `fprintf` (formatted output)
+  - `fputs` / `fwrite`
+- File modes: `r`, `w`, `a`, `rb`, `wb`
+- Error handling:
+  - checking `NULL` after `fopen`
+  - using `perror` / `errno`
+- Common pitfalls:
+  - forgetting to close files
+  - buffer overflows
+  - incorrect format specifiers
+  - not handling end-of-file correctly
+
+---
+
+## How to Build & Run
+
+Because each exercise may be independent, compile a specific file like this:
+
+```bash
+gcc -Wall -Wextra -Werror <file>.c -o <program>
+./<program>
+```
+
+Example:
+
+```bash
+gcc -Wall -Wextra -Werror read_file.c -o read_file
+./read_file
+```
+
+---
+
+## Suggested Folder Layout (optional improvement)
+
+If you want to standardize this section later:
+
+```
+files/
+├── src/
+├── include/
+├── samples/        # sample input files
+├── Makefile
+└── README.md
+```
+
+---
+
+## Notes
+
+- This code is written for learning and portfolio purposes.
+- No external libraries are used beyond the C standard library.
+- If your programs depend on input files, consider adding them under a `samples/` folder.
+
+---
+
+## Next Improvements (optional)
+
+- Add sample input files + expected outputs
+- Add a Makefile with `make`, `make run`, `make clean`
+- Include a small program that copies a file (text/binary)
+- Add basic argument parsing (read/write files via CLI)
+
+### Quick tip: check errors properly
+A safe pattern:
+
 ```c
-#include <stdio.h>
-#include <stdlib.h>
-
-#define MAX_LINE_LENGTH 100
-#define FILENAME "string.txt"
-
-int main(void) {
-    FILE *file;
-    char buffer[MAX_LINE_LENGTH];
-    
-    file = fopen(FILENAME, "r");
-    
-    if (file == NULL) {
-        fprintf(stderr, "Erro: Não foi possível abrir o arquivo '%s'\n", FILENAME);
-        fprintf(stderr, "Verifique se o arquivo existe e as permissões de acesso\n");
-        getchar();
-        return EXIT_FAILURE;
-    }
-    
-    printf("Conteúdo do arquivo '%s':\n", FILENAME);
-    printf("----------------------------------------\n");
-    
-    while (fgets(buffer, sizeof(buffer), file) != NULL) {
-        printf("%s", buffer);
-    }
-    
-    printf("\n----------------------------------------\n");
-    printf("Fim do arquivo\n\n");
-    
-    fclose(file);
-    
-    printf("Pressione qualquer tecla para sair...");
-    getchar();
-    
-    return EXIT_SUCCESS;
+FILE *fp = fopen("input.txt", "r");
+if (!fp) {
+    perror("fopen");
+    return 1;
 }
-# Compilar
-gcc -std=c99 -Wall arquivo_texto.c -o leitor
+```
 
-# Executar
-./leitor
-
-
-#include <stdio.h>
-#include <stdlib.h>
-
-#define MAX_LINE_LENGTH 100
-#define FILENAME "string.txt"
-
-int main(void) {
-    FILE *file;
-    char buffer[MAX_LINE_LENGTH];
-    
-    file = fopen(FILENAME, "r");
-    
-    if (file == NULL) {
-        fprintf(stderr, "Error: Failed to open file '%s'\n", FILENAME);
-        fprintf(stderr, "Verify file exists and access permissions\n");
-        getchar();
-        return EXIT_FAILURE;
-    }
-    
-    printf("Content of file '%s':\n", FILENAME);
-    printf("----------------------------------------\n");
-    
-    while (fgets(buffer, sizeof(buffer), file) != NULL) {
-        printf("%s", buffer);
-    }
-    
-    printf("\n----------------------------------------\n");
-    printf("End of file\n\n");
-    
-    fclose(file);
-    
-    printf("Press any key to exit...");
-    getchar();
-    
-    return EXIT_SUCCESS;
-}
-
-# Compile
-gcc -std=c99 -Wall file_reader.c -o reader
-
-# Execute
-./reader
-
-
+Remember to always `fclose(fp)` when done.
