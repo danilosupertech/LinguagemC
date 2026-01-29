@@ -1,67 +1,71 @@
-✅ 1. "*argv[] é um ponteiro de ponteiro"
-👉 Correto com pequena revisão de nomenclatura:
+# Pointers (C)
 
-A declaração do main é:
+A small collection of **C pointer** exercises and mini-programs focused on mastering:
 
-c
-Copy
-Edit
-int main(int argc, char *argv[])
-Isso é sintaticamente equivalente a:
+- Pointer basics (`&`, `*`)
+- Pointer arithmetic
+- Arrays vs pointers
+- Strings as `char *`
+- Functions with pointer parameters
+- Basic memory concepts (stack vs heap)
 
-c
-Copy
-Edit
-int main(int argc, char **argv)
-Ou seja:
+> This folder is part of my broader **C learning repository** and contains practice code written to reinforce fundamentals.
 
-argv é um ponteiro para ponteiro de char.
+---
 
-É um vetor de ponteiros, cada ponteiro aponta para uma string (char *).
+## 📁 What you’ll find here
 
-✅ 2. "*argv[] nunca vai ter a posição \0"
-Vamos separar:
-argv termina com um ponteiro NULL (argv[argc] == NULL), não com '\0'.
+Typical files in this folder may include exercises such as:
 
-Cada string individual dentro de argv, como argv[1], sim, termina com '\0', porque são strings C.
+- Swapping values using pointers
+- Iterating arrays using pointer arithmetic
+- Working with strings via pointers
+- Passing pointers to functions to modify variables “in place”
+- Using pointers for simple data structure manipulation (when applicable)
 
-💡 Resumo:
+If you want this folder to be more “portfolio-friendly”, keep **one exercise per file** and give files descriptive names (e.g., `swap_with_pointers.c`, `iterate_array_ptr.c`, `string_length_ptr.c`).
 
-Nível	Termina com...
-argv	NULL
-argv[i]	'\0'
+---
 
-✅ 3. "*str, sendo ponteiro simples, ao percorrer terá '\0' no fim`"
-Perfeitamente correto! 🟢
+## ✅ Build & Run
 
-c
-Copy
-Edit
-char *str = *argv; // str aponta para uma string como "teste"
+Most examples are single-file programs. Compile with `gcc`:
 
-while (*str) {
-    // percorre caractere por caractere até encontrar '\0'
-    str++;
-}
-Aqui você está andando pela string apontada, caractere por caractere, até *str == '\0'.
+```bash
+gcc -Wall -Wextra -Werror -o program file.c
+./program
+```
 
-✅ 4. "*str = *argv não copia, apenas aponta para mesma memória`"
-🔹 Exato! Isso é atribuição de ponteiro, não é cópia do conteúdo:
+If you have multiple files:
 
-c
-Copy
-Edit
-char *str = *argv;
-str e *argv agora apontam para a mesma região de memória, ou seja, para o início da string atual.
+```bash
+gcc -Wall -Wextra -Werror -o app *.c
+./app
+```
 
-Você pode modificar str (fazer str++, etc.) sem alterar argv, porque você está só mudando o endereço contido em str.
+---
 
-🧠 Isso é como ter dois marcadores apontando para o mesmo lugar em um mapa: um você move, o outro fica parado.
+## 🧠 Notes / Tips
 
-✅ Conclusão geral do seu raciocínio:
-Conceito	Está correto?	Comentário
-argv é ponteiro de ponteiro	✅	char **argv
-argv não termina com \0	✅	Termina com NULL
-*argv é ponteiro para string que termina com \0	✅	Strings em C são nulas-terminadas
-char *str = *argv copia o ponteiro, não a string	✅	Ponteiros distintos, mesma memória
-Pode iterar str até *str == '\0'	✅	Forma correta de percorrer string
+- Prefer `size_t` for sizes and indexes when iterating arrays.
+- When passing arrays to functions, remember they “decay” to pointers:
+  - `int arr[]` in a function parameter becomes `int *arr`
+- To modify a variable inside a function, pass its **address**:
+  - `void set_value(int *x) { *x = 42; }`
+
+---
+
+## 🚀 Next Improvements (optional)
+
+To make this folder shine for recruiters:
+
+- Add a short comment header to each file explaining the goal
+- Add sample input/output in comments or in this README
+- Create a `Makefile` with targets like `make`, `make run`, `make clean`
+
+---
+
+## ⚠️ Disclaimer
+
+This repository contains **original practice code**.  
+It does **not** include official school/subject material.
