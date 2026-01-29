@@ -1,13 +1,13 @@
-# Contact Manager (C)
+# Contact Manager in C
 
-A small **Contact Manager** written in **C** to practice core programming fundamentals such as:
+A simple **Contact Manager** written in **C** to practice core programming fundamentals such as:
 
 - structs and strings
 - arrays and dynamic memory
 - file input/output
 - modular code organization
 
-This project is part of my broader **C language learning repository** and focuses on clean, readable code and fundamental computer science concepts.
+This project is part of a broader **C language learning repository** and focuses on clean, readable code and fundamental computer science concepts.
 
 ---
 
@@ -19,23 +19,24 @@ This project is part of my broader **C language learning repository** and focuse
 - Edit or remove contacts
 - Persist data using files (save/load)
 
-*(Adjust this list to match the features currently implemented in your code.)*
-
 ---
 
-## Project Structure (suggested)
+## Project Structure
 
+```
 contactManager/
-├── include/
-├── src/
-├── Makefile
-└── README.md
+├── contact_manager.h    # Header with function declarations
+├── contact_manager.c    # Implementation
+├── main.c               # User interface
+├── Makefile             # Build script
+└── README.md            # This file
+```
 
 ---
 
 ## 🧪 Testing
 
-Run the test suite to verify code quality and functionality:
+Run the test suite to verify compilation and functionality:
 
 ```bash
 bash test.sh

@@ -1,4 +1,4 @@
-# Memory Allocation (C)
+# Memory Allocation in C
 
 This project contains **practical exercises and examples** focused on **dynamic memory management in C**.
 
@@ -29,18 +29,16 @@ This project was created to:
 
 ---
 
-## 📂 Project Structure (example)
+## 📂 Project Structure
 
 ```
 memory-allocation/
-├── examples/        # Small focused examples
-├── exercises/       # Practice exercises
-├── src/             # Source files (.c)
-├── include/         # Header files (.h)
-└── README.md
+├── Malloc_Calloc.c      # Examples with malloc and calloc
+├── TesteMalloc.c        # malloc tests
+├── TesteCalloc.c        # calloc tests
+├── README.md            # This file
+└── test.sh              # Test suite
 ```
-
-*(The actual structure may vary depending on the exercise.)*
 
 ---
 

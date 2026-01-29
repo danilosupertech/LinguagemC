@@ -1,53 +1,53 @@
-# Sistema de Carrinho de Compras em C 🛒
+# Shopping Cart System in C 🛒
 
-> Uma implementação profissional e didática de um sistema de gerenciamento de carrinho de compras usando **listas encadeadas** em linguagem C.
+> A professional and educational implementation of a shopping cart management system using **linked lists** in C language.
 
-## 📋 Visão Geral
+## 📋 Overview
 
-Este projeto implementa um **carrinho de compras dinâmico** com funcionalidades completas de gerenciamento de produtos. A estrutura utiliza **listas ligadas (linked lists)** para armazenar produtos de forma flexível, permitindo adicionar, remover e gerenciar itens em tempo real.
+This project implements a **dynamic shopping cart** with comprehensive product management features. The structure uses **linked lists** to store products flexibly, allowing adding, removing, and managing items in real-time.
 
-O código foi desenvolvido seguindo **padrões profissionais** de programação em C, com:
-- Documentação completa via Doxygen
-- Tratamento robusto de erros
-- Separação clara entre interface e implementação
-- Interface interativa com usuário
-- Bom uso de memória dinâmica
+The code was developed following **professional C programming standards**, including:
+- Complete Doxygen documentation
+- Robust error handling
+- Clear separation between interface and implementation
+- Interactive user interface
+- Efficient dynamic memory usage
 
-### Estrutura Conceitual: Lista Encadeada 📊
+### Conceptual Structure: Linked List 📊
 
-Uma **lista encadeada** é uma coleção dinâmica onde cada elemento (nó) contém dados e um ponteiro para o próximo elemento.
+A **linked list** is a dynamic collection where each element (node) contains data and a pointer to the next element.
 
 ```
-[Produto 1] → [Produto 2] → [Produto 3] → NULL
+[Product 1] → [Product 2] → [Product 3] → NULL
 ```
 
-**Vantagens:**
-- Tamanho flexível (sem limite pré-definido)
-- Inserção/remoção eficiente no início
-- Uso apenas da memória necessária
+**Advantages:**
+- Flexible size (no predefined limit)
+- Efficient insertion/removal at the beginning
+- Uses only necessary memory
 
 ---
 
-## 🎯 Funcionalidades
+## 🎯 Features
 
-| Funcionalidade | Descrição |
+| Feature | Description |
 |---|---|
-| **Adicionar Produto** | Insere novo produto ou incrementa quantidade se já existe |
-| **Remover Produto** | Remove produto específico do carrinho |
-| **Atualizar Quantidade** | Modifica a quantidade de um produto |
-| **Buscar Produto** | Encontra e exibe detalhes de um produto |
-| **Visualizar Carrinho** | Exibe tabela formatada com todos os itens e total |
-| **Limpar Carrinho** | Remove todos os produtos do carrinho |
-| **Calcular Total** | Calcula automaticamente preço total e quantidade |
+| **Add Product** | Inserts new product or increments quantity if it already exists |
+| **Remove Product** | Removes specific product from cart |
+| **Update Quantity** | Modifies product quantity |
+| **Search Product** | Finds and displays product details |
+| **View Cart** | Displays formatted table with all items and total |
+| **Clear Cart** | Removes all products from cart |
+| **Calculate Total** | Automatically calculates total price and quantity |
 
 ---
 
-## 📁 Estrutura do Projeto
+## 📁 Project Structure
 
 ```
 shopping-cart/
-├── shopping_cart.h          # Header com definições e protótipos
-├── shopping_cart.c          # Implementação das funções
+├── shopping_cart.h          # Header with definitions and prototypes
+├── shopping_cart.c          # Function implementation
 ├── main.c                   # Interface interativa com usuário
 ├── Makefile                 # Script para compilação
 ├── readme.md                # Este arquivo

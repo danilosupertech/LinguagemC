@@ -1,135 +1,135 @@
 
-# 🗂️ Gerenciador de Fila em C
+# 🗂️ Queue Manager in C
 
 ---
 
-## 📚 Sobre o Projeto
+## 📚 About the Project
 
-Este programa implementa uma **fila dinâmica** em linguagem C para gerenciar uma lista de clientes. Ele permite adicionar clientes ao final da fila e atender (remover) clientes do início da fila, simulando uma fila real de atendimento.
-
----
-
-## 🧠 Conceitos Fundamentais: O Que é uma Fila?
-
-Uma **fila** é uma estrutura de dados que funciona como uma **fila de pessoas no mundo real**. Imagine uma fila no banco ou supermercado:
-
-- **Primeiro a chegar, primeiro a ser atendido** (FIFO - *First In, First Out*).
-- A pessoa que chega vai para o **final da fila**.
-- O atendente chama quem está no **início da fila**.
-
-### Como isso é representado no código?
-
-| Mundo Real           | Estrutura em C               |
-|---------------------|-----------------------------|
-| Pessoa (cliente)     | `struct No`                 |
-| Fila (ordem de chegada) | `struct Fila` com ponteiros `inicio` e `fim` |
-| Chegar na fila      | Função `NovoCliente` adiciona no fim da lista ligada |
-| Atender (sair da fila) | Função `atendercliente` remove o primeiro nó da lista |
+This program implements a **dynamic queue** in C language to manage a list of customers. It allows adding customers to the end of the queue and serving (removing) customers from the beginning, simulating a real service queue.
 
 ---
 
-## 🧱 Estrutura do Código
+## 🧠 Fundamental Concepts: What is a Queue?
+
+A **queue** is a data structure that works like a **real-world queue**. Imagine standing in line at a bank or supermarket:
+
+- **First to arrive, first to be served** (FIFO - *First In, First Out*).
+- The person who arrives goes to the **end of the queue**.
+- The attendant calls whoever is at the **beginning of the queue**.
+
+### How is this represented in code?
+
+| Real World | C Structure |
+|---|---|
+| Person (customer) | `struct No` |
+| Queue (order of arrival) | `struct Fila` with `inicio` and `fim` pointers |
+| Arrive in queue | Function `NovoCliente` adds at the end of linked list |
+| Serve (leave queue) | Function `atendercliente` removes first node from list |
+
+---
+
+## 🧱 Code Structure
 
 ### 1. `struct No`
 
-Representa um cliente na fila:
+Represents a customer in the queue:
 
 ```c
 typedef struct No {
-    char nome[30];          // Nome do cliente
-    struct No *proximo;     // Ponteiro para o próximo cliente na fila
+    char nome[30];          // Customer name
+    struct No *proximo;     // Pointer to next customer in queue
 } No;
 ```
 
 ### 2. `struct Fila`
 
-Guarda informações da fila:
+Stores queue information:
 
 ```c
 typedef struct Fila {
-    No *inicio;             // Primeiro cliente na fila
-    No *fim;                // Último cliente na fila
-    int tamanho;            // Quantidade de clientes na fila
+    No *inicio;             // First customer in queue
+    No *fim;                // Last customer in queue
+    int tamanho;            // Number of customers in queue
 } Fila;
 ```
 
 ---
 
-## ⚙️ Principais Funções
+## ⚙️ Main Functions
 
-| Função            | O que faz                                                | Analogia no Mundo Real         |
-|-------------------|----------------------------------------------------------|-------------------------------|
-| `CriarFila()`      | Inicializa uma fila vazia                                | Criar uma fila sem pessoas    |
-| `NovoCliente()`    | Adiciona um cliente ao fim da fila                       | Pessoa entra no final da fila |
-| `atendercliente()` | Remove o primeiro cliente da fila (quem será atendido)  | Pessoa atendida sai da fila   |
-| `ExibirFila()`     | Mostra a fila atual com a ordem dos clientes             | Visualizar a fila em espera   |
-
----
-
-## 🚶 Passo a Passo do Funcionamento
-
-1. **Criar a fila** (vazia, sem clientes)
-2. **Adicionar clientes** com nome, um a um, sempre no final
-3. **Exibir fila** mostrando a ordem de atendimento
-4. **Atender clientes** removendo-os do início da fila
-5. Repetir até terminar ou sair do programa
+| Function | What it does | Real-World Analogy |
+|---|---|---|
+| `CriarFila()` | Initializes an empty queue | Create a queue with no people |
+| `NovoCliente()` | Adds a customer to the end of queue | Person enters at end of line |
+| `atendercliente()` | Removes first customer from queue (who gets served) | Person served leaves queue |
+| `ExibirFila()` | Shows current queue with order of customers | View the waiting queue |
 
 ---
 
-## 🖼️ Representação Visual da Fila
+## 🚶 Step-by-Step Operation
+
+1. **Create the queue** (empty, no customers)
+2. **Add customers** with name, one by one, always at the end
+3. **Display queue** showing the service order
+4. **Serve customers** by removing them from the beginning
+5. Repeat until finish or exit program
+
+---
+
+## 🖼️ Visual Representation of Queue
 
 ```
-[início] → João → Maria → Carlos → [fim]
+[start] → João → Maria → Carlos → [end]
 ```
 
-- `inicio`: ponteiro para o cliente "João" (próximo a ser atendido)
-- `fim`: ponteiro para o cliente "Carlos" (último a entrar)
-- Setas `→` representam o campo `proximo` que liga um cliente ao próximo na fila
+- `inicio`: pointer to customer "João" (next to be served)
+- `fim`: pointer to customer "Carlos" (last to enter)
+- Arrows `→` represent the `proximo` field linking one customer to the next
 
 ---
 
-## 📝 Exemplo de uso (na prática)
+## 📝 Usage Example (in practice)
 
 ```plaintext
-Selecione uma das opcoes abaixo:
-1 - Novo Cliente
-2 - Atender um cliente
-0 - Sair
-Opcao: 1
-Qual o nome do cliente? Ana
-Cliente 'Ana' adicionado à fila.
+Select one of the options below:
+1 - New Customer
+2 - Serve a customer
+0 - Exit
+Option: 1
+What is the customer's name? Ana
+Customer 'Ana' added to queue.
 
 0 | Ana
 
-Opcao: 1
-Qual o nome do cliente? Bruno
-Cliente 'Bruno' adicionado à fila.
+Option: 1
+What is the customer's name? Bruno
+Customer 'Bruno' added to queue.
 
 0 | Ana
 1 | Bruno
 
-Opcao: 2
-Cliente atendido e removido da fila.
+Option: 2
+Customer served and removed from queue.
 
 0 | Bruno
 ```
 
 ---
 
-## 💡 Por que usar uma fila?
+## 💡 Why use a queue?
 
-- **Organização e ordem garantida:** O primeiro a chegar é o primeiro a ser atendido.
-- **Flexibilidade:** Diferente de arrays estáticos, esta fila usa **lista ligada**, permitindo crescer dinamicamente sem limites fixos.
-- **Aplicações práticas:** Sistemas de atendimento, buffers, escalonadores de processos, sistemas operacionais, etc.
+- **Organization and guaranteed order:** First to arrive is first to be served.
+- **Flexibility:** Unlike static arrays, this queue uses **linked list**, allowing dynamic growth without fixed limits.
+- **Practical applications:** Service systems, buffers, process schedulers, operating systems, etc.
 
 ---
 
-## ⚠️ Boas práticas implementadas
+## ⚠️ Best practices implemented
 
-- Alocação dinâmica de memória com `malloc` e liberação com `free`
-- Manipulação segura de strings com `strcpy`
-- Verificação de fila vazia antes de remover elementos
-- Limpeza do buffer para entrada correta de strings com espaços
+- Dynamic memory allocation with `malloc` and deallocation with `free`
+- Safe string manipulation with `strcpy`
+- Check for empty queue before removing elements
+- Buffer cleanup for correct input of strings with spaces
 
 ---
 
@@ -171,15 +171,15 @@ Testing: Memory checks... ✓ PASSED
 
 ---
 
-## 🛠️ Como compilar e executar
+## 🛠️ How to Compile and Run
 
-### Opção 1: Com o script de teste (recomendado)
+### Option 1: With test script (recommended)
 
 ```bash
 bash test.sh
 ```
 
-### Opção 2: Compilação manual
+### Option 2: Manual compilation
 
 ```bash
 gcc main.c -o fila
@@ -188,26 +188,26 @@ gcc main.c -o fila
 
 ---
 
-## 👨‍💻 Autor
+## 👨‍💻 Author
 
-Desenvolvido por **danilosupertech** – aprendizado prático e didático de estruturas de dados em C.
-
----
-
-## 🎨 Ícones utilizados:
-
-- 🗂️ Estrutura de dados
-- 📚 Conceitos
-- 🧱 Estrutura
-- ⚙️ Funções
-- 🚶 Fluxo
-- 🖼️ Visualização
-- 📝 Exemplo
-- 💡 Importância
-- ⚠️ Cuidados
-- 🛠️ Como usar
-- 👨‍💻 Autor
+Developed by **danilosupertech** – practical and educational learning of data structures in C.
 
 ---
 
-Obrigado por conferir! Para dúvidas ou sugestões, abra uma issue.
+## 🎨 Icons used:
+
+- 🗂️ Data structure
+- 📚 Concepts
+- 🧱 Structure
+- ⚙️ Functions
+- 🚶 Flow
+- 🖼️ Visualization
+- 📝 Example
+- 💡 Importance
+- ⚠️ Best practices
+- 🛠️ How to use
+- 👨‍💻 Author
+
+---
+
+Thank you for checking this out! For questions or suggestions, open an issue.
