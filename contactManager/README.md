@@ -1,60 +1,73 @@
 # Contact Manager (C)
 
-**Gerenciador de Contatos simples em C**  
-Aplicativo de console para adicionar, listar, editar e excluir contatos, utilizando arquivo binário para armazenamento.
+A small **Contact Manager** written in **C** to practice core programming fundamentals such as:
+
+- structs and strings
+- arrays and dynamic memory
+- file input/output
+- modular code organization
+
+This project is part of my broader **C language learning repository** and focuses on clean, readable code and fundamental computer science concepts.
 
 ---
 
-## 🛠️ Como compilar / How to compile
+## Features
 
-No Linux/macOS/WSL:
-```bash
-gcc main.c contact_manager.c -o contact_manager
+- Add new contacts
+- List all contacts
+- Search contacts
+- Edit or remove contacts
+- Persist data using files (save/load)
 
-
-**Gerenciador de Contatos simples em C**  
-Aplicativo de console para adicionar, listar, editar e excluir contatos, utilizando arquivo binário para armazenamento.
+*(Adjust this list to match the features currently implemented in your code.)*
 
 ---
 
-## 🛠️ Como compilar / How to compile
+## Project Structure (suggested)
 
-No Linux/macOS/WSL:
-```bash
-gcc main.c contact_manager.c -o contact_manager
+contactManager/
+├── include/
+├── src/
+├── Makefile
+└── README.md
 
-gcc main.c contact_manager.c -o contact_manager.exe
+---
 
+## Build & Run
 
-===== Gerenciador de Contatos =====
-1. Listar todos os contatos
-2. Adicionar contato
-3. Editar contato
-4. Excluir contato
-0. Sair
-Escolha uma opção:
+### Option A — Using Makefile (recommended)
 
-CC = gcc
-CFLAGS = -std=c11 -Wall -Wextra -pedantic
-TARGET = contact_manager
-SRC = main.c contact_manager.c
-OBJ = $(SRC:.c=.o)
+make
+./contact_manager
 
-all: $(TARGET)
+### Option B — Compile manually
 
-$(TARGET): $(OBJ)
-    $(CC) $(CFLAGS) -o $@ $(OBJ)
+gcc -Wall -Wextra -Werror src/*.c -o contact_manager
+./contact_manager
 
-%.o: %.c contact_manager.h
-    $(CC) $(CFLAGS) -c $< -o $@
+---
 
-clean:
-    rm -f $(OBJ) $(TARGET) contacts.db
+## Example Usage
 
-contact_manager/
-├── main.c               # Interface CLI e menu
-├── contact_manager.h    # Declarações da API
-├── contact_manager.c    # Implementação do módulo
-├── contacts.db          # Arquivo binário gerado (não versionar)
-└── Makefile             # Opcional (facilita build/clean)
+1) Add contact
+2) List contacts
+3) Search contact
+4) Remove contact
+0) Exit
 
+---
+
+## Notes
+
+- All code is written for learning and portfolio purposes.
+- No external libraries are used beyond the C standard library.
+- No official course subjects or evaluation materials are included.
+
+---
+
+## Future Improvements
+
+- Improve input validation
+- Better memory management and cleanup
+- Separate logic into clearer modules
+- Add persistence using structured formats (CSV / binary)
