@@ -33,17 +33,56 @@ contactManager/
 
 ---
 
+## 🧪 Testing
+
+Run the test suite to verify code quality and functionality:
+
+```bash
+bash test.sh
+```
+
+**What the tests cover:**
+- ✓ Source file existence and integrity
+- ✓ Compilation with strict GCC flags (-Wall -Wextra -std=c99)
+- ✓ Memory leak detection (valgrind)
+- ✓ Function detection and availability
+- ✓ Code quality checks
+
+**Test output example:**
+```
+╔════════════════════════════════════════════════╗
+║   Contact Manager - Test Suite                ║
+╚════════════════════════════════════════════════╝
+
+Testing: Files exist... ✓ PASSED
+Testing: Compilation... ✓ PASSED
+Testing: Memory checks (valgrind)... ✓ PASSED
+Testing: Code quality... ✓ PASSED
+
+╔════════════════════════════════════════════════╗
+║         TEST RESULTS SUMMARY                  ║
+╠════════════════════════════════════════════════╣
+║ Tests Passed: 4 ✓
+║ Tests Failed:  0
+╚════════════════════════════════════════════════╝
+```
+
+---
+
 ## Build & Run
 
-### Option A — Using Makefile (recommended)
+### Option A — Using Test Script (recommended)
 
-make
-./contact_manager
+```bash
+bash test.sh
+```
 
 ### Option B — Compile manually
 
-gcc -Wall -Wextra -Werror src/*.c -o contact_manager
+```bash
+gcc -Wall -Wextra -std=c99 main.c contact_manager.c -o contact_manager
 ./contact_manager
+```
 
 ---
 

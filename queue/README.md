@@ -133,7 +133,53 @@ Cliente atendido e removido da fila.
 
 ---
 
+## 🧪 Testing
+
+Run the test suite to verify compilation and functionality:
+
+```bash
+bash test.sh
+```
+
+**What the tests cover:**
+- ✓ Source file existence
+- ✓ Compilation with strict GCC flags (-Wall -Wextra -std=c99)
+- ✓ Function verification (looks for `atender` and `Novo` functions)
+- ✓ Program execution and basic functionality
+- ✓ Memory check with valgrind (if available)
+- ✓ Code quality and warnings
+
+**Test output example:**
+```
+╔════════════════════════════════════════════════╗
+║      Queue/Fila - Test Suite                  ║
+╚════════════════════════════════════════════════╝
+
+Testing: Files exist... ✓ PASSED
+Testing: Compilation... ✓ PASSED
+Testing: Functions found... ✓ PASSED
+Testing: Execution... ✓ PASSED
+Testing: Memory checks... ✓ PASSED
+
+╔════════════════════════════════════════════════╗
+║         TEST RESULTS SUMMARY                  ║
+╠════════════════════════════════════════════════╣
+║ Tests Passed: 5 ✓
+║ Tests Failed:  0
+╚════════════════════════════════════════════════╝
+```
+
+---
+
 ## 🛠️ Como compilar e executar
+
+### Opção 1: Com o script de teste (recomendado)
+
+```bash
+bash test.sh
+```
+
+### Opção 2: Compilação manual
 
 ```bash
 gcc main.c -o fila

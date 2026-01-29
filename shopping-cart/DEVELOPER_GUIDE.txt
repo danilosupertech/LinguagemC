@@ -1,0 +1,503 @@
+/* ============================================================================
+ * DEVELOPER GUIDE - Shopping Cart System
+ * ============================================================================
+ *
+ * Este arquivo contém dicas, padrões e guidelines para desenvolvedores
+ * que desejam entender, manter ou expandir o código do Shopping Cart.
+ *
+ * ========================================================================== */
+
+/*
+ * ÍNDICE:
+ * 1. Arquitetura do Projeto
+ * 2. Padrões de Codificação
+ * 3. Convenções de Nomenclatura
+ * 4. Documentação com Doxygen
+ * 5. Tratamento de Erros
+ * 6. Gerenciamento de Memória
+ * 7. Adicionando Novas Funcionalidades
+ * 8. Teste e Debugging
+ * 9. Performance e Otimização
+ * 10. Checklist de Qualidade
+ */
+
+/* ============================================================================
+ * 1. ARQUITETURA DO PROJETO
+ * ========================================================================== */
+
+/*
+ * A arquitetura segue o padrão de dois níveis:
+ *
+ * CAMADA DE API (shopping_cart.h)
+ *  └─ Define a interface pública
+ *     • Estruturas de dados
+ *     • Protótipos de funções
+ *     • Constantes e enums
+ *
+ * CAMADA DE IMPLEMENTAÇÃO (shopping_cart.c)
+ *  └─ Implementa a lógica
+ *     • Alocação de memória
+ *     • Operações em lista encadeada
+ *     • Tratamento de erros
+ *
+ * CAMADA DE APLICAÇÃO (main.c)
+ *  └─ Usa a API para
+ *     • Interface com usuário
+ *     • Menu interativo
+ *     • Validação de entrada
+ *
+ * CONFIGURAÇÃO (config.h)
+ *  └─ Parâmetros ajustáveis
+ *     • Constantes
+ *     • Debug flags
+ *     • Opções de compilação
+ *
+ * Benefícios:
+ *  ✓ Modularidade: Cada arquivo tem responsabilidade clara
+ *  ✓ Testabilidade: Pode testar API isoladamente
+ *  ✓ Manutenibilidade: Mudanças em um lugar
+ *  ✓ Reusabilidade: shopping_cart.c pode ser usado em outros projetos
+ */
+
+/* ============================================================================
+ * 2. PADRÕES DE CODIFICAÇÃO
+ * ========================================================================== */
+
+/*
+ * ESTILO GERAL:
+ * - Indentação: 4 espaços (não tabs)
+ * - Linha máxima: 80 caracteres (comentários), 100 (código)
+ * - Chavetas: K&R style (abertura na mesma linha)
+ *
+ * Exemplo:
+ */
+
+CartStatus cart_example_function(ShoppingCart *cart, int value) {
+    if (!cart) {
+        return CART_ERROR_INVALID_INPUT;
+    }
+
+    if (value < 0) {
+        return CART_ERROR_INVALID_INPUT;
+    }
+
+    // Implementação aqui
+    return CART_SUCCESS;
+}
+
+/*
+ * BOAS PRÁTICAS:
+ * - Validar entrada no início da função
+ * - Usar early return para cases de erro
+ * - Comentar blocos complexos
+ * - Uma responsabilidade por função
+ * - Nomes descritivos e autoexplicativos
+ */
+
+/* ============================================================================
+ * 3. CONVENÇÕES DE NOMENCLATURA
+ * ========================================================================== */
+
+/*
+ * ESTRUTURAS:
+ *  ✓ CamelCase: Product, ShoppingCart
+ *  ✓ Nomes substantivos
+ *  ✓ Significado claro
+ *
+ * FUNÇÕES PÚBLICAS:
+ *  ✓ Prefixo "cart_": cart_create(), cart_add_product()
+ *  ✓ snake_case: cart_calculate_total()
+ *  ✓ Verbos descritivos
+ *
+ * FUNÇÕES PRIVADAS:
+ *  ✓ Prefixo "static"
+ *  ✓ Nomes com underscores iniciais (opcional): _helper_function()
+ *  ✓ Documentação mesmo assim
+ *
+ * CONSTANTES:
+ *  ✓ UPPER_CASE: MAX_PRODUCT_NAME_LEN, CURRENCY_SYMBOL
+ *  ✓ Definidas em config.h
+ *  ✓ Bem documentadas
+ *
+ * VARIÁVEIS:
+ *  ✓ snake_case: product_count, unit_price
+ *  ✓ Nomes significativos
+ *  ✓ Prefixo indicando tipo (se necessário): p_product, n_count
+ *
+ * TIPOS:
+ *  ✓ Enum: CartStatus (terminado em "Status", "Type", etc.)
+ */
+
+/* ============================================================================
+ * 4. DOCUMENTAÇÃO COM DOXYGEN
+ * ========================================================================== */
+
+/*
+ * FORMATO PARA ESTRUTURAS:
+ */
+
+/**
+ * @brief Descrição breve da estrutura.
+ *
+ * Descrição mais longa, se necessário.
+ */
+typedef struct {
+    int field1;     /**< Descrição do campo 1 */
+    char *field2;   /**< Descrição do campo 2 */
+} ExampleStruct;
+
+/*
+ * FORMATO PARA FUNÇÕES:
+ */
+
+/**
+ * @brief Descrição breve em uma linha.
+ *
+ * Descrição longa e detalhada do que a função faz.
+ * Pode ocupar múltiplas linhas.
+ *
+ * @param param1 Descrição do primeiro parâmetro.
+ * @param param2 Descrição do segundo parâmetro.
+ *
+ * @return Descrição do valor de retorno.
+ *         Pode ocupar múltiplas linhas.
+ *
+ * @note Notas adicionais importantes.
+ * @see reference_function()
+ * @warning Avisos sobre uso incorreto.
+ *
+ * @example
+ * @code
+ * // Exemplo de uso
+ * if (function(param1, param2) == SUCCESS) {
+ *     // sucesso
+ * }
+ * @endcode
+ */
+CartStatus example_documented_function(int param1, const char *param2);
+
+/*
+ * DICAS DOXYGEN:
+ * - Use @brief para descrição curta
+ * - Use @param para cada parâmetro
+ * - Use @return para valor de retorno
+ * - Use @note para observações importantes
+ * - Use @warning para cuidados
+ * - Use @example/@code para exemplos
+ * - Use @see para referências cruzadas
+ * - Coloque no header (.h) para documentação pública
+ */
+
+/* ============================================================================
+ * 5. TRATAMENTO DE ERROS
+ * ========================================================================== */
+
+/*
+ * ESTRATÉGIA DE ERRO:
+ *  1. Usar CartStatus enum para retornos
+ *  2. Validar entrada no início
+ *  3. Usar early return para erros
+ *  4. Never silent failures
+ *
+ * EXEMPLO BUEN:
+ */
+
+CartStatus cart_good_example(ShoppingCart *cart, float price) {
+    // Validação de entrada
+    if (!cart) {
+        return CART_ERROR_INVALID_INPUT;
+    }
+
+    if (price < 0) {
+        return CART_ERROR_INVALID_INPUT;
+    }
+
+    // Operação segura
+    if (/* something failed */) {
+        return CART_ERROR_MALLOC;
+    }
+
+    return CART_SUCCESS;
+}
+
+/*
+ * EXEMPLO RUIM:
+ */
+
+// ❌ NÃO FAÇA ISSO:
+void cart_bad_example(ShoppingCart *cart) {
+    // Sem validação
+    cart->head = malloc(sizeof(Product));  // Pode falhar!
+    
+    // Sem retorno de erro
+}
+
+/*
+ * BOAS PRÁTICAS:
+ * - Sempre verificar malloc()
+ * - Sempre verificar ponteiros NULL
+ * - Retornar código de erro apropriado
+ * - Nunca silenciar erros
+ * - Propagar erros para cima
+ */
+
+/* ============================================================================
+ * 6. GERENCIAMENTO DE MEMÓRIA
+ * ========================================================================== */
+
+/*
+ * PRINCÍPIOS:
+ *  1. Quem aloca, libera
+ *  2. Sempre verificar malloc()
+ *  3. Limpar ao sair
+ *  4. Evitar vazamentos
+ *
+ * PADRÃO ALOCAÇÃO:
+ */
+
+Product *product_create(int code, const char *name, ...) {
+    Product *product = (Product *)malloc(sizeof(Product));
+    
+    // ✓ SEMPRE verificar
+    if (!product) {
+        return NULL;  // Ou CART_ERROR_MALLOC
+    }
+
+    // Inicializar
+    product->code = code;
+    strncpy(product->name, name, MAX_PRODUCT_NAME_LEN - 1);
+    product->name[MAX_PRODUCT_NAME_LEN - 1] = '\0';
+    product->next = NULL;
+
+    return product;
+}
+
+/*
+ * PADRÃO LIMPEZA:
+ */
+
+void cart_clean_resources(ShoppingCart *cart) {
+    if (!cart) {
+        return;  // ✓ Verificar NULL
+    }
+
+    Product *current = cart->head;
+    while (current) {
+        Product *temp = current;
+        current = current->next;
+        free(temp);  // ✓ Liberar cada nó
+    }
+
+    cart->head = NULL;
+    cart->item_count = 0;
+}
+
+/*
+ * DETECÇÃO DE VAZAMENTOS:
+ * $ gcc -g shopping_cart.c main.c -o program
+ * $ valgrind --leak-check=full ./program
+ *
+ * Procure por "LEAK SUMMARY" para ver se há vazamentos.
+ */
+
+/* ============================================================================
+ * 7. ADICIONANDO NOVAS FUNCIONALIDADES
+ * ========================================================================== */
+
+/*
+ * PASSOS PARA ADICIONAR UMA NOVA FUNÇÃO:
+ *
+ * 1. DESIGN
+ *    - Definir assinatura (parâmetros e retorno)
+ *    - Determinar tratamento de erro
+ *    - Pensar em casos extremos
+ *
+ * 2. HEADER (shopping_cart.h)
+ *    - Adicionar protótipo
+ *    - Documentação Doxygen completa
+ *    - Atualizar comentários relacionados
+ *
+ * 3. IMPLEMENTAÇÃO (shopping_cart.c)
+ *    - Implementar com comentários
+ *    - Validar entrada
+ *    - Testar casos de erro
+ *    - Garantir limpeza de memória
+ *
+ * 4. INTERFACE (main.c) [se necessário]
+ *    - Adicionar opção no menu
+ *    - Criar handler function
+ *    - Adicionar mensagens de feedback
+ *
+ * 5. DOCUMENTAÇÃO
+ *    - Atualizar readme.md
+ *    - Adicionar exemplos
+ *    - Atualizar CHANGELOG.md
+ *
+ * 6. TESTE
+ *    - Testar manualmente
+ *    - Testar casos de erro
+ *    - Verificar memory leaks
+ *    - Verificar compilação
+ *
+ * EXEMPLO: Adicionar cart_sort_products()
+ *
+ * shopping_cart.h:
+ *   CartStatus cart_sort_by_code(ShoppingCart *cart);
+ *
+ * shopping_cart.c:
+ *   CartStatus cart_sort_by_code(ShoppingCart *cart) {
+ *       if (!cart) return CART_ERROR_INVALID_INPUT;
+ *       // Implementação
+ *   }
+ *
+ * main.c:
+ *   case 8:
+ *       handle_sort_products(cart);
+ *       break;
+ */
+
+/* ============================================================================
+ * 8. TESTE E DEBUGGING
+ * ========================================================================== */
+
+/*
+ * COMPILAÇÃO COM DEBUG:
+ * $ gcc -Wall -Wextra -g -std=c99 main.c shopping_cart.c -o program
+ *
+ * USAR GDB:
+ * $ gdb ./program
+ * (gdb) run
+ * (gdb) break main
+ * (gdb) continue
+ * (gdb) step      (próxima linha)
+ * (gdb) next      (próxima instrução)
+ * (gdb) print var (imprimir variável)
+ * (gdb) backtrace (pilha de chamadas)
+ *
+ * VERIFICAR MEMORY LEAKS:
+ * $ valgrind --leak-check=full --show-leak-kinds=all ./program
+ *
+ * ANÁLISE ESTÁTICA:
+ * $ clang --analyze main.c shopping_cart.c
+ *
+ * COMPILAÇÃO RIGOROSA:
+ * $ gcc -Wall -Wextra -Werror -pedantic -std=c99 *.c
+ *
+ * TESTES MANUAIS:
+ * 1. Teste caminho feliz (entrada válida)
+ * 2. Teste casos de erro (entrada inválida)
+ * 3. Teste casos extremos (empty, large data)
+ * 4. Teste sequências (add -> update -> remove)
+ */
+
+/* ============================================================================
+ * 9. PERFORMANCE E OTIMIZAÇÃO
+ * ========================================================================== */
+
+/*
+ * ANÁLISE DE COMPLEXIDADE (já feita):
+ *
+ * Operação          | Tempo  | Espaço
+ * ─────────────────────────────────
+ * cart_create()     | O(1)   | O(1)
+ * cart_add_product  | O(1)   | O(1)
+ * cart_remove       | O(n)   | O(1)
+ * cart_find         | O(n)   | O(1)
+ * cart_print        | O(n)   | O(1)
+ *
+ * Onde n = número de produtos
+ *
+ * OTIMIZAÇÕES POSSÍVEIS:
+ * 1. Usar hash table para busca O(1)
+ * 2. Usar árvore balanceada para sort O(log n)
+ * 3. Cache o valor total para cálculo O(1)
+ *
+ * PROFILING:
+ * $ gcc -pg main.c shopping_cart.c -o program
+ * $ ./program
+ * $ gprof ./program gmon.out
+ */
+
+/* ============================================================================
+ * 10. CHECKLIST DE QUALIDADE
+ * ========================================================================== */
+
+/*
+ * ANTES DE FAZER COMMIT:
+ *
+ * CÓDIGO:
+ *  □ Compila sem warnings (-Wall -Wextra -pedantic)
+ *  □ Sem vazamento de memória (valgrind)
+ *  □ Testes manuais passam
+ *  □ Casos de erro tratados
+ *  □ Input validado
+ *
+ * DOCUMENTAÇÃO:
+ *  □ Doxygen comments em todas as funções públicas
+ *  □ Comentários em código complexo
+ *  □ Exemplos de uso fornecidos
+ *  □ README atualizado
+ *  □ CHANGELOG atualizado
+ *
+ * ESTILO:
+ *  □ Nomeação consistente
+ *  □ Indentação correta
+ *  □ Sem código morto
+ *  □ Sem variáveis não usadas
+ *  □ Linha máxima respeitada
+ *
+ * SEGURANÇA:
+ *  □ Sem buffer overflow
+ *  □ Sem use-after-free
+ *  □ Sem null deref
+ *  □ Entrada validada
+ *  □ Sem hardcoded values
+ *
+ * FUNCIONALIDADE:
+ *  □ Nova funcionalidade funciona
+ *  □ Não quebra código existente
+ *  □ Todos os casos testados
+ *  □ Performance aceitável
+ *  □ Documentação correspondente
+ */
+
+/* ============================================================================
+ * REFERÊNCIAS RÁPIDAS
+ * ========================================================================== */
+
+/*
+ * ESTRUTURA DE UMA FUNÇÃO:
+ *
+ * CartStatus cart_function(ShoppingCart *cart, int value) {
+ *     // 1. Validação de entrada
+ *     if (!cart || value < 0) {
+ *         return CART_ERROR_INVALID_INPUT;
+ *     }
+ *
+ *     // 2. Lógica principal
+ *     // ...
+ *
+ *     // 3. Retornar sucesso
+ *     return CART_SUCCESS;
+ * }
+ *
+ * PROTÓTIPO DOXYGEN:
+ *
+ * /**
+ *  * @brief Uma linha descrevendo o que faz.
+ *  *
+ *  * Descrição longa e detalhada.
+ *  *
+ *  * @param param Descrição
+ *  * @return Descrição do retorno
+ *  * /
+ *
+ * COMPILAR:
+ * $ make
+ * $ make run
+ * $ make clean
+ */
+
+/* ============================================================================
+ * FIM DO DEVELOPER GUIDE
+ * ========================================================================== */

@@ -44,19 +44,63 @@ memory-allocation/
 
 ---
 
-## 🛠️ Build & Run
+## 🧪 Testing
 
-### Compile with gcc
+Run the test suite to verify compilation and memory management:
 
 ```bash
-gcc -Wall -Wextra -Werror *.c -o memory_allocation
+bash test.sh
+```
+
+**What the tests cover:**
+- ✓ Source files (Malloc_Calloc.c, TesteMalloc.c, TesteCalloc.c) exist
+- ✓ Compilation with strict GCC flags (-Wall -Wextra -std=c99)
+- ✓ malloc/calloc/free usage verification
+- ✓ Program execution and functionality
+- ✓ Memory leak detection (valgrind if available)
+- ✓ Code quality and warnings
+
+**Test output example:**
+```
+╔════════════════════════════════════════════════╗
+║   Memory Allocation - Test Suite              ║
+╚════════════════════════════════════════════════╝
+
+Testing: Files exist... ✓ PASSED
+Testing: Compilation... ✓ PASSED
+Testing: malloc/calloc detected... ✓ PASSED
+Testing: Memory checks (valgrind)... ✓ PASSED
+Testing: Code quality... ✓ PASSED
+
+╔════════════════════════════════════════════════╗
+║         TEST RESULTS SUMMARY                  ║
+╠════════════════════════════════════════════════╣
+║ Tests Passed: 5 ✓
+║ Tests Failed:  0
+╚════════════════════════════════════════════════╝
+```
+
+---
+
+## 🛠️ Build & Run
+
+### Option 1: Using Test Script (recommended)
+
+```bash
+bash test.sh
+```
+
+### Option 2: Compile with gcc
+
+```bash
+gcc -Wall -Wextra -std=c99 *.c -o memory_allocation
 ./memory_allocation
 ```
 
 If files are split into folders:
 
 ```bash
-gcc -Wall -Wextra -Werror src/*.c -o memory_allocation
+gcc -Wall -Wextra -std=c99 src/*.c -o memory_allocation
 ./memory_allocation
 ```
 
