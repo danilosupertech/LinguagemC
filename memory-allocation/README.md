@@ -1,103 +1,86 @@
-# Implementação de Alocação Dinâmica - Lista Encadeada em C
+# Memory Allocation (C)
 
-## Objetivo
-Demonstrar os princípios fundamentais de:
-- Alocação dinâmica de memória
-- Estruturas de dados encadeadas
-- Gerenciamento manual de memória
-- Operações básicas em listas encadeadas
+This project contains **practical exercises and examples** focused on **dynamic memory management in C**.
 
-## Funcionalidades Implementadas
-1. Criação dinâmica de nós
-2. Inserção no final da lista (O(1))
-3. Travessia/impressão da lista
-4. Desalocação completa de memória
-5. Tratamento básico de erros de alocação
+The goal is to understand how memory is allocated, resized, and released at runtime using standard C functions.
 
-## 🇺🇸 English Version
+---
 
-## Dynamic Memory Allocation: Malloc vs Calloc
+## 📌 Topics Covered
 
-### How Memory Allocation Works
-```c
-#include <stdlib.h>
+- `malloc`
+- `calloc`
+- `realloc`
+- `free`
+- Pointer arithmetic
+- Memory leaks and common pitfalls
+- Safe allocation patterns
 
-// malloc: Allocates uninitialized memory
-int *arr_malloc = malloc(5 * sizeof(int)); 
+---
 
-// calloc: Allocates zero-initialized memory
-int *arr_calloc = calloc(5, sizeof(int));
+## 🎯 Purpose
 
-// malloc output example:
-Element 0: value = -1094795585, address = 0x561a3d5b1260
+Dynamic memory management is one of the most critical aspects of C programming.
 
-// calloc output example:
-Element 0: value = 0, address = 0x561a3d5b12a0
+This project was created to:
+- Practice correct memory allocation and deallocation
+- Understand ownership and lifetime of memory blocks
+- Avoid common errors such as leaks, double free, and invalid access
 
-#include <stdio.h>
-#include <stdlib.h>
+---
 
-typedef struct Node {
-    int data;
-    struct Node *next;
-} Node;
+## 📂 Project Structure (example)
 
-int main() {
-    // Safer allocation with calloc
-    Node *node = calloc(1, sizeof(Node));
-    
-    if (node == NULL) {
-        fprintf(stderr, "Memory allocation failed\n");
-        return 1;
-    }
-    
-    node->data = 42;
-    // node->next is automatically NULL
-    
-    printf("Node data: %d\n", node->data);
-    printf("Next address: %p\n", (void*)node->next);
-    
-    free(node);
-    return 0;
-}
+```
+memory-allocation/
+├── examples/        # Small focused examples
+├── exercises/       # Practice exercises
+├── src/             # Source files (.c)
+├── include/         # Header files (.h)
+└── README.md
+```
 
-#include <stdlib.h>
+*(The actual structure may vary depending on the exercise.)*
 
-// malloc: Aloca memória não inicializada
-int *arr_malloc = malloc(5 * sizeof(int)); 
+---
 
-// calloc: Aloca memória inicializada com zero
-int *arr_calloc = calloc(5, sizeof(int));
+## 🛠️ Build & Run
 
-// Exemplo de saída malloc:
-Elemento 0: valor = -1094795585, endereço = 0x561a3d5b1260
+### Compile with gcc
 
-// Exemplo de saída calloc:
-Elemento 0: valor = 0, endereço = 0x561a3d5b12a0
+```bash
+gcc -Wall -Wextra -Werror *.c -o memory_allocation
+./memory_allocation
+```
 
-#include <stdio.h>
-#include <stdlib.h>
+If files are split into folders:
 
-typedef struct Node {
-    int dado;
-    struct Node *proximo;
-} Node;
+```bash
+gcc -Wall -Wextra -Werror src/*.c -o memory_allocation
+./memory_allocation
+```
 
-int main() {
-    // Alocação mais segura com calloc
-    Node *node = calloc(1, sizeof(Node));
-    
-    if (node == NULL) {
-        fprintf(stderr, "Falha na alocação de memória\n");
-        return 1;
-    }
-    
-    node->dado = 42;
-    // node->proximo já é automaticamente NULL
-    
-    printf("Dado do nó: %d\n", node->dado);
-    printf("Endereço próximo: %p\n", (void*)node->proximo);
-    
-    free(node);
-    return 0;
-}
+---
+
+## 🧪 What You Will Find Here
+
+- Examples showing how `malloc` and `free` work
+- Reallocation scenarios using `realloc`
+- Exercises highlighting incorrect usage and how to fix it
+- Small programs to observe memory behavior
+
+---
+
+## ⚠️ Notes
+
+- All code is written for learning and experimentation purposes.
+- No external libraries are used beyond the C standard library.
+- This project focuses on **understanding**, not optimization.
+
+---
+
+## 🚀 Future Improvements
+
+- Add examples with structs and dynamic arrays
+- Introduce Valgrind usage examples
+- Add documentation explaining memory diagrams
